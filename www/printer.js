@@ -1,3 +1,4 @@
+cordova.define("cordova-plugin-datecs-printer.DatecsPrinter", function(require, exports, module) {
 var exec = require('cordova/exec');
 
 var printer = {
@@ -72,6 +73,16 @@ var printer = {
   },
   writeHex: function (hex, onSuccess, onError) {
     exec(onSuccess, onError, 'DatecsPrinter', 'writeHex', [hex]);
+  },
+  connectWifi: function (ip, onSuccess, onError) {
+    exec(onSuccess, onError, 'DatecsPrinter', 'connectPrinter', [ip]);
+  },
+  cutpaper: function (ip, onSuccess, onError) {
+    exec(onSuccess, onError, 'DatecsPrinter', 'cutpaper', [ip]);
+  },
+  printWifi: function (data, onSuccess, onError) {
+    exec(onSuccess, onError, 'DatecsPrinter', 'printWifi', [data]);
   }
 };
 module.exports = printer;
+});

@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class Printer {
+    
+    
     private static final int MAX_PACKET_SIZE = 2044;
     private static boolean sDebug = false;
     private static final int DEFAULT_TIMEOUT = 1000;
@@ -1521,4 +1523,8 @@ public class Printer {
         private Settings() {
         }
     }
+
+   
+
+
 }

@@ -1,9 +1,9 @@
 {
-  "name": "cordova-plugin-datecs-printer",
-  "version": "0.8.2",
+  "name": "cordova-plugin-thermalprint",
+  "version": "1.3.1",
   "description": "Cordova Datecs Printer Plugin",
   "cordova": {
-    "id": "cordova-plugin-datecs-printer",
+    "id": "cordova-plugin-thermalprint",
     "platforms": [
       "android"
     ]

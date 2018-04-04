@@ -1,7 +1,5 @@
 # cordova-plugin-datecs-printer
 
-### **PLEASE ASK QUESTIONS ON [STACKOVERFLOW](https://stackoverflow.com) MENTIONING cordova-plugin-datecs-printer AND USING THE TAGS cordova-plugins AND escpos**
-
 The first thing that you must know is that the plugin is available through this variable `window.DatecsPrinter`.
 
 *As well as any other plugin it will only be available after `deviceready` event is fired*
@@ -20,7 +18,6 @@ _(every function accept at least two parameters, and they're the last ones: onSu
   - 3- Printing box's height (it does not resize the image)
   - 4- Alignment code (you can find the codes [here](#alignment-codes))
 - **printBarcode(barcodeType, barcodeData):** this will print a barcode accordingly to the given type and data (you can find the barcode types code [here](#barcode-types-code))
-- **printQRCode(size, eccLv, data):** this will print the QRCode accordingly to the given size (allowed values 1, 4, 6, 8, 10, 12, 14), error collection control level (allowed values 1 (L 7%), 2 (M 15%), 3 (Q 25%), 4 (H 30%) and data.
 
 ### Reported Working Printer Models
 
@@ -39,7 +36,6 @@ These models were reported as working as expected:
 - DAPPER DP-HT201 58mm
 - RG-MTP80B
 - Black Copper MINI Thermal Printer BC-P58B
-- MHT-P5801 (58mm)
 
 
 ### Example
@@ -70,6 +66,7 @@ function printSomeTestText() {
 
 function printMyImage() {
   var image = new Image();
+  image.src = 'img/some_image.jpg';
   image.onload = function() {
       var canvas = document.createElement('canvas');
       canvas.height = 100;
@@ -90,7 +87,6 @@ function printMyImage() {
           }
       )
   };
-  image.src = 'img/some_image.jpg';
 }
 
 function printMyBarcode() {
@@ -104,71 +100,6 @@ function printMyBarcode() {
       alert(JSON.stringify(error));
     }
   );
-}
-```
-
-#### Print QRCode example
-
-```javascript
-function printQRCode() {
-  window.DatecsPrinter.printQRCode(
-    4, 
-    4, 
-    'http://giorgiofellipe.com.br',
-    function() {
-      alert('success!');
-    },
-    function() {
-      alert(JSON.stringify(error));
-    }
-  );
-}
-```
-
-Some printer models may not be able to print QRCode using the above way. 
-Here goes another way, using the `node-qrcode` package and `printImage` method.
-
-```javascript
-function printQRCode() {
-
-    //Create QR Code with node-qrcode package
-    //https://github.com/soldair/node-qrcode
-
-    var QRCode = require('qrcode');
-
-    //Generate the QR image
-    QRCode.toDataURL('https://your-qr-data', { errorCorrectionLevel: 'L' }, function (err, url) {
-
-      var image = new Image();
-
-      image.src = url;
-
-      var canvas = document.createElement('canvas');
-        canvas.height = 164;
-        canvas.width = 164;
-        var context = canvas.getContext('2d');
-
-        context.drawImage(image, 0, 0);
-
-        var imageData = canvas.toDataURL('image/jpeg').replace(/^data:image\/(png|jpg|jpeg);base64,/, ""); //remove 
-
-      window.DatecsPrinter.printImage(
-            imageData, //base64
-            canvas.height, 
-            canvas.width, 
-            //align
-            1,
-
-            function() {
-            },
-
-            function(error) {
-                alert(JSON.stringify(error));
-            }
-        );
-
-  });
-
 }
 ```
 

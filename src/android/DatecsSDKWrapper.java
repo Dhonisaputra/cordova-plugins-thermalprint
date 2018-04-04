@@ -41,6 +41,16 @@ import android.graphics.BitmapFactory;
 import com.datecs.api.BuildInfo;
 import com.datecs.api.printer.ProtocolAdapter;
 
+// printer wifi
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import android.content.Context;
+
+// end of wifi
+
 public class DatecsSDKWrapper {
     private static final String LOG_TAG = "BluetoothPrinter";
     private Printer mPrinter;
@@ -54,6 +64,20 @@ public class DatecsSDKWrapper {
     private CordovaInterface mCordova;
     private CordovaWebView mWebView;
     private final Application app;
+
+    public static final  boolean MESSAGE_CONNECTED=true;
+    public static final  boolean MESSAGE_CONNECTED_ERROR=false;
+    public static final  boolean MESSAGE_WRITE_SUCCESS=true;
+    public static final  boolean MESSAGE_WRITE_ERROR=false;
+    private  Socket mMyWifiSocket=null;
+    private BufferedReader BufReader= null;
+    private OutputStream PriOut = null;
+    private boolean iState=false;  
+    
+    public  String mstrIp="192.168.1.248";
+    public  int mPort=9100;
+    
+    int TimeOut=1300;
 
     /**
      * Interface de eventos da Impressora
@@ -704,4 +728,6 @@ public class DatecsSDKWrapper {
     private void sendStatusUpdate(boolean isConnected) {
         this.sendStatusUpdate(isConnected, true, false);
     }
+
+    
 }
